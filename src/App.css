@@ -15,18 +15,39 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 7vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 15px;
   color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
+
+form {
+  text-align: start;
+  margin: 20px;
+
+}
+input, select{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  width: 30%;
+  height: 25px;
+}
+
+label {
+  padding: 12px;
+  width: 15%;
+  display: inline-block;
+  align-self: start;
+}
+
 
 @keyframes App-logo-spin {
   from {
@@ -35,4 +56,29 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.drop-down {
+  margin-top: 9px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  height: 25px;
+}
+
+.drop-down-select  {
+  height: 20px;
+  margin-left: 35%;
+  align-items: center;
+  border-radius: 5px !important;
+  padding: 1px 52px 8px 1px;
+}
+
+button {
+  background-color: #282c34;
+  color: white;
+  margin: 15px 15px 15px 18%;
+  width: 15%;
+  height: 25px;
 }
