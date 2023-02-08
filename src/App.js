@@ -2,23 +2,45 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import {Link} from 'react-router-dom';
 
 
 function App() {
     return (
         <div className="App">
-            <Student/>
+            <Home/>
 
         </div>
     );
 }
 
-function Student() {
+const departments = ["Civil", "Computer Science", "Mechanical", "Electronics and Communications"];
+
+export const Home = () => {
+    return (
+        <div className="App">
+            <CollegeHeader/>
+            <div className="App-logo">
+               <img src = "https://www.shutterstock.com/image-vector/university-buildingeducation-studentcity-landscape-house-260nw-1117704410.jpg"/>
+            </div>
+            <div>
+                <table>
+                    <tr>Our Vision</tr>
+                    <tr>Empowering the rural youth through technical education</tr>
+                </table>
+
+            </div>
+        </div>
+    );
+}
+
+export const Student = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [semester, setSemester] = useState('');
     const [semesterOptions, setSemesterOptions] = useState([]);
     const [rollNumber, setRollNumber] = useState('');
+    const [department, setDepartment] = useState(departments[0]);
 
     useEffect(() => {
         fetch("http://localhost:8080/semester")
@@ -51,6 +73,10 @@ function Student() {
         setRollNumber(e.target.value);
     }
 
+    const handleDepartmentChange = (e) => {
+        setDepartment(e.value);
+    }
+
     const handleSubmit = (e) => {
         const semesterId = semesterOptions
             .filter(semesterObj => semesterObj.number === semester)
@@ -65,7 +91,8 @@ function Student() {
                 firstName: firstName,
                 lastName: lastName,
                 rollNum: rollNumber,
-                semesterId: semesterId
+                semesterId: semesterId,
+                department: department
             })
         })
             .then(res => res.json())
@@ -75,6 +102,7 @@ function Student() {
                     setLastName('');
                     setSemester('');
                     setRollNumber('');
+                    setDepartment(departments[0]);
                 },
                 (error) => {
                 }
@@ -83,9 +111,7 @@ function Student() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <h1>Collage Name</h1>
-            </header>
+            <CollegeHeader/>
             <form onSubmit={(e) => {
                 handleSubmit(e)
             }}>
@@ -103,9 +129,108 @@ function Student() {
                               value={semester}
                               onChange={(e) => handleSemesterChange(e)}/>
                 </div>
+                <div className='drop-down'>
+                    <label>Department</label>
+                    <Dropdown className='drop-down-select' options={departments}
+                              value={department}
+                              onChange={(e) => handleDepartmentChange(e)}/>
+                </div>
                 <button>Submit</button>
             </form>
         </div>
+    )
+}
+export const Teacher = () => {
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [department, setDepartment] = useState(departments[0]);
+
+    const handleFirstNameChange = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const handleLastNameChange = (e) => {
+        setLastName(e.target.value);
+    }
+
+    const handleDepartmentChange = (e) => {
+        setDepartment(e.value);
+    }
+
+    const handleSubmit = (e) => {
+        fetch("http://localhost:8080/teacher", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                department: department
+            })
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setFirstName('');
+                    setLastName('');
+                    setDepartment(departments[0]);
+                },
+                (error) => {
+                }
+            )
+    }
+
+    return (
+        <div className="App">
+            <CollegeHeader/>
+            <form onSubmit={(e) => {
+                handleSubmit(e)
+            }}>
+
+                <h3>Teacher detail form</h3>
+                <label> First Name</label>
+                <input type="text" value={firstName} required onChange={(e) => handleFirstNameChange(e)}/><br/>
+                <label> Last Name</label>
+                <input type="text" value={lastName} required onChange={(e) => handleLastNameChange(e)}/><br/>
+                <div className='drop-down'>
+                    <label>Department</label>
+                    <Dropdown className='drop-down-select' options={departments}
+                              value={department}
+                              onChange={(e) => handleDepartmentChange(e)}/>
+                </div>
+                <button>Submit</button>
+            </form>
+        </div>
+    )
+}
+
+export const AboutUs = () => {
+
+    return(
+        <div className="App">
+            <CollegeHeader/>
+            <h4> About our Collage </h4>
+        </div>
+    )
+}
+
+export const CollegeHeader = () => {
+
+    return (
+        <header className="App-header">
+            <h1 className="header">Collage Name</h1>
+            <nav className="nav">
+                <Link className="App-link" to="/"> Home</Link>
+                <Link className="App-link" to="/student"> Student</Link>
+                <Link className="App-link" to="/teacher"> Teacher</Link>
+                <Link className="App-link" to="/aboutUs"> AboutUs</Link>
+                <Link className="App-link" to="/feedbackForm"> FeedBackForm</Link>
+
+            </nav>
+        </header>
     )
 }
 
