@@ -1,13 +1,13 @@
-import './App.css';
+import '../App.css';
 import React, {useEffect, useState} from "react";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import {Link} from 'react-router-dom';
-import {CollegeHeader} from "./App";
+import {CollegeHeader} from "../App";
 
 const departments = ["Civil", "Computer Science", "Mechanical", "Electronics and Communications"];
 
-export const FeedBackForm = () =>{
+export const Filters = () =>{
     const [department, setDepartment] = useState('');
     const [teacher, setTeacher] = useState('');
     const [teacherOptions, setTeacherOptions] = useState([]);
@@ -16,7 +16,11 @@ export const FeedBackForm = () =>{
 
 
     useEffect(() => {
-        fetch('http://localhost:8080/teacher?department=' + department )
+        fetch('http://localhost:8080/teacher?department=' + department , {
+            headers: {
+                'Authorization':"Basic TmFuZGluaTpuQDc4ODgw"
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -38,7 +42,11 @@ export const FeedBackForm = () =>{
         const teacherId = teacherOptions
             .filter(teacherObj => teacherObj.firstName === teacher)
             .map(teacherObj => teacherObj.id)[0]
-        fetch("http://localhost:8080/subject?teacherId="+ teacherId)
+        fetch("http://localhost:8080/subject?teacherId="+ teacherId, {
+            headers: {
+                'Authorization':"Basic TmFuZGluaTpuQDc4ODgw"
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -60,6 +68,11 @@ export const FeedBackForm = () =>{
         // const teacher = teacherOption
         //     .filter(teacherObj => teacherObj.firstName === teacher)
         //     .map(semesterObj => semesterObj.id)[0]
+        const teacherId = teacherOptions
+            .filter(teacherObj => teacherObj.firstName === teacher)
+            .map(teacherObj => teacherObj.id)[0]
+        window.localStorage.setItem('teacherId', teacherId)
+        debugger
         setTeacher(e.value);
     }
 
@@ -70,24 +83,20 @@ export const FeedBackForm = () =>{
         setSubject(e.value);
     }
     return (
-        <div className="App">
-            <CollegeHeader/>
-            <div className='drop-down'>
-                <label>Department</label>
-                <Dropdown className='drop-down-select' options={departments}
+            <div className='form-filter'>
+                <label style={{width: '23%'}}>Department</label>
+                <Dropdown className='select' options={departments}
                           value={department}
                           onChange={(e) => handleDepartmentChange(e)}/>
-                <label>Teacher Name</label>
-                <Dropdown className='drop-down-select' options={teacherOptions.map(teacher => teacher.firstName)}
+                <label style={{width: '23%'}}>Teacher Name</label>
+                <Dropdown className='select' options={teacherOptions.map(teacher => teacher.firstName)}
                           value={teacher}
                           onChange={(e) => handleTeacherChange(e)}/>
-                <label>Subject Name</label>
-                <Dropdown className='drop-down-select' options={subjectOptions.map(subject => subject.name)}
+                <label style={{width: '23%'}}>Subject Name</label>
+                <Dropdown className='select' options={subjectOptions.map(subject => subject.name)}
                           value={subject}
                           onChange={(e) => handleSubjectChange(e)}/>
             </div>
-
-        </div>
     );
 
 }

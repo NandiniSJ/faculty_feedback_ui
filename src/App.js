@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from "react";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -21,7 +22,8 @@ export const Home = () => {
         <div className="App">
             <CollegeHeader/>
             <div className="App-logo">
-               <img src = "https://www.shutterstock.com/image-vector/university-buildingeducation-studentcity-landscape-house-260nw-1117704410.jpg"/>
+                <img
+                    src="https://www.shutterstock.com/image-vector/university-buildingeducation-studentcity-landscape-house-260nw-1117704410.jpg"/>
             </div>
             <div>
                 <table>
@@ -117,21 +119,27 @@ export const Student = () => {
             }}>
 
                 <h3>Student detail form</h3>
-                <label> First Name</label>
-                <input type="text" value={firstName} required onChange={(e) => handleFirstNameChange(e)}/><br/>
-                <label> Last Name</label>
-                <input type="text" value={lastName} required onChange={(e) => handleLastNameChange(e)}/><br/>
-                <label> Roll Number</label>
-                <input type="text" value={rollNumber} required onChange={(e) => handleRollNumberChange(e)}/><br/>
+                <label> First Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" value={firstName} required onChange={(e) => handleFirstNameChange(e)}/>
+                </label>
+                <br/>
+                <label> Last Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" value={lastName} required onChange={(e) => handleLastNameChange(e)}/>
+                </label>
+                <br/>
+                <label> Roll Number:&nbsp;&nbsp;&nbsp;
+                    <input type="text" value={rollNumber} required onChange={(e) => handleRollNumberChange(e)}/>
+                </label>
+                <br/>
                 <div className='drop-down'>
-                    <label>Semester</label>
-                    <Dropdown className='drop-down-select' options={semesterOptions.map(semester => semester.number)}
+                    <label style={{width: '23%'}}>Semester:</label>
+                    <Dropdown className='select' options={semesterOptions.map(semester => semester.number)}
                               value={semester}
                               onChange={(e) => handleSemesterChange(e)}/>
                 </div>
                 <div className='drop-down'>
-                    <label>Department</label>
-                    <Dropdown className='drop-down-select' options={departments}
+                    <label style={{width: '23%'}}>Department</label>
+                    <Dropdown className='select' options={departments}
                               value={department}
                               onChange={(e) => handleDepartmentChange(e)}/>
                 </div>
@@ -191,13 +199,15 @@ export const Teacher = () => {
             }}>
 
                 <h3>Teacher detail form</h3>
-                <label> First Name</label>
-                <input type="text" value={firstName} required onChange={(e) => handleFirstNameChange(e)}/><br/>
-                <label> Last Name</label>
-                <input type="text" value={lastName} required onChange={(e) => handleLastNameChange(e)}/><br/>
+                <label> First Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" value={firstName} required onChange={(e) => handleFirstNameChange(e)}/><br/>
+                </label>
+                <label> Last Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" value={lastName} required onChange={(e) => handleLastNameChange(e)}/><br/>
+                </label>
                 <div className='drop-down'>
-                    <label>Department</label>
-                    <Dropdown className='drop-down-select' options={departments}
+                    <label style={{width: '23%'}}>Department</label>
+                    <Dropdown className='select' options={departments}
                               value={department}
                               onChange={(e) => handleDepartmentChange(e)}/>
                 </div>
@@ -209,10 +219,10 @@ export const Teacher = () => {
 
 export const AboutUs = () => {
 
-    return(
+    return (
         <div className="App">
             <CollegeHeader/>
-            <h4> About our Collage </h4>
+            <h4 style={{textAlign: 'center'}}> About our Collage </h4>
         </div>
     )
 }
@@ -226,8 +236,8 @@ export const CollegeHeader = () => {
                 <Link className="App-link" to="/"> Home</Link>
                 <Link className="App-link" to="/student"> Student</Link>
                 <Link className="App-link" to="/teacher"> Teacher</Link>
-                <Link className="App-link" to="/aboutUs"> AboutUs</Link>
                 <Link className="App-link" to="/feedbackForm"> FeedBackForm</Link>
+                <Link className="App-link" to="/aboutUs"> AboutUs</Link>
 
             </nav>
         </header>

@@ -4,7 +4,7 @@ import './index.css';
 import App, {Student, Teacher, Home, AboutUs} from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route, createBrowserRouter, RouterProvider} from "react-router-dom"
-import {FeedBackForm} from "./FeedBackForm";
+import {FeedBackForm} from "./feedback/FeedBackForm";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
